@@ -47,8 +47,6 @@ while run:
     if move and not vibrate:
         circ_x -= 1000 * dt * neg_x
         circ_y += 1000 * dt * neg_y
-        circ_x = mPos[0]
-        circ_y = mPos[1]
 
     # Drawing
     blue_c = pygame.draw.circle(win, color, (int(circ_x), int(circ_y)), 50)
