@@ -16,6 +16,7 @@ while not done:
 
     player.draw()
     player.move(delta_time)
+    pygame.display.flip()
 
     # Exiting
     if event.type == pygame.KEYDOWN:

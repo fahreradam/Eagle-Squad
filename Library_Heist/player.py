@@ -8,7 +8,6 @@ class Player:
 
     def draw(self):
         self.win.blit(self.img, self.position)
-        pygame.display.flip()
 
     def move(self, dt):
         keys = pygame.key.get_pressed()
