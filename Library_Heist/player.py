@@ -1,9 +1,10 @@
 import pygame
 
+
 class Player:
     def __init__(self, x, y, surf):
         self.position = [x, y]
-        self.img =
+        self.img = "images\\DO NOT USE. ONLY FOR TESTING.png"
         self.win = surf
 
     def draw(self):
