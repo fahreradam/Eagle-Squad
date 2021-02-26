@@ -1,6 +1,7 @@
 import pygame
 import random
 
+
 class Power:
     def __init__(self, x, y, surf):
         self.win = surf
@@ -20,6 +21,7 @@ class Power:
 
 class Bookshelves:
     """Still needs randomized"""
+
     def __init__(self, x, y, surf):
         self.win = surf
         self.position = [x, y]
@@ -41,6 +43,20 @@ class Bookshelves:
                                                                                                               "left"),
                                      True, (255, 255, 255)), player)
 
+
 class Bathroom:
-    def __init__(self, win):
-        self.time = 0
+    def __init__(self, x, y, surf):
+        self.win = surf
+        self.time = random.randint(20, 120)
+        self.clock = 0
+        # self.img = pygame.image.load("images\\")
+        self.position = [x, y]
+        self.font = pygame.font.SysFont("Arial", 32)
+
+    # def draw(self):
+    #   self.win.blit(self.img, self.position)
+
+    def timer(self, dt, player):
+        self.clock += dt
+        if self.time <= int(self.clock) <= self.time + 5:
+            self.win.blit(self.font.render("I need to use the bathroom", True, (255, 255, 255)), (250, 0))

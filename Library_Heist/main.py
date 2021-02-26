@@ -9,6 +9,7 @@ win = pygame.display.set_mode((win_w, win_h))
 player = player.Player(400, 300, win)
 power = objectives.Power(0, 0, win)
 books = objectives.Bookshelves(500, 0, win)
+bathroom = objectives.Bathroom(0, 400, win)
 clock = pygame.time.Clock()
 
 done = False
@@ -19,6 +20,7 @@ while not done:
     mouse = pygame.mouse.get_pos()
 
     win.fill((0, 0, 0))
+    bathroom.timer(delta_time, player.position)
     books.draw()
     books.collide(player.position)
     power.draw()
