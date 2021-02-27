@@ -8,9 +8,11 @@ pygame.init()
 win_w = 800
 win_h = 600
 win = pygame.display.set_mode((win_w, win_h))
+map = pygame.image.load("images\\Map.png")
+map_scale = pygame.transform.scale(map, (win_w, win_h))
 
 # Class importing
-player = player.Player(400, 300, win)
+player = player.Player(11, 413, win)
 power = objectives.Power(0, 0, win)
 books = objectives.Bookshelves(500, 0, win)
 bathroom = objectives.Bathroom(0, 400, win)
@@ -58,13 +60,15 @@ while not done:
                 screen = "main_menu"
 
     if screen == "game":
-        win.fill((0, 0, 0))
+        win.blit(map_scale, (0, 0))
+        player.draw()
         bathroom.timer(delta_time, player.position)
+        bathroom.draw()
+        bathroom.number2(player.position)
         books.draw()
         books.read(player.position)
         books.collect(player.position, event)
         power.draw()
-        player.draw()
         player.move(delta_time)
         power.collide(player.position)
 

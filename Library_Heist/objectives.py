@@ -1,5 +1,6 @@
 import pygame
 import random
+import time
 
 
 class Power:
@@ -8,15 +9,20 @@ class Power:
         self.position = [x, y]
         self.img = pygame.draw.rect(self.win, (255, 0, 0), (self.position[0], self.position[1], 100, 100))
         self.font = pygame.font.SysFont("Arial", 32)
+        self.power_on = False
 
     def draw(self):
         pygame.draw.rect(self.win, (255, 0, 0), (self.position[0], self.position[1], 100, 100))
 
     def collide(self, player):
-        if self.img.collidepoint((player[0] + 25, player[1] + 25)):
-            self.win.blit(self.font.render("Press E to turn on power", True, (255, 255, 255)), player)
-            if pygame.key.get_pressed()[pygame.K_e]:
+        if self.img.collidepoint((player[0] + 25, player[1] + 25)) and not self.power_on:
+            if pygame.key.get_pressed()[pygame.K_e] and not self.power_on:
                 self.win.blit(self.font.render("You have turned on the power", True, (255, 255, 255)), player)
+                pygame.display.flip()
+                time.sleep(1)
+                self.power_on = True
+            else:
+                self.win.blit(self.font.render("Press E to turn on power", True, (255, 255, 255)), player)
 
 
 class Bookshelves:
@@ -26,11 +32,12 @@ class Bookshelves:
         self.win = surf
         self.position = [x, y]
         self.bookshelf = pygame.draw.rect(self.win, (255, 0, 0), (self.position[0], self.position[1], 100, 100))
-        self.table = pygame.draw.rect(self.win, (255, 0, 0), (self.position[0], self.position[1], 100, 100))
+        self.table = pygame.draw.rect(self.win, (255, 0, 0), (self.position[0], self.position[1] + 200, 100, 100))
         self.font = pygame.font.SysFont("Arial", 32)
         self.text = self.font.render("Press E to pick up book", True, (255, 255, 255))
         self.book = 0
         self.book_left = 2
+        self.read_book = False
 
     def draw(self):
         pygame.draw.rect(self.win, (255, 0, 0), (self.position[0], self.position[1], 100, 100))
@@ -38,25 +45,28 @@ class Bookshelves:
 
     def collect(self, player, event):
         if self.bookshelf.collidepoint((player[0] + 25, player[1] + 25)):
-            if event.type == pygame.KEYDOWN:
-                if event.key == pygame.K_e:
-                    self.book += 1
-                    self.win.blit(
-                        self.font.render(("You have" + str(self.book) + "books. You have" + str(self.book_left) + "books "
-                                                                                                                  "left"),
-                                         True, (255, 255, 255)), player)
+            if pygame.key.get_pressed()[pygame.K_e]:
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_e:
+                        self.book += 1
+                self.win.blit(
+                    self.font.render(
+                        ("You have " + str(self.book) + " books. You have " + str(self.book_left) + " books "
+                                                                                                    "left"),
+                        True, (255, 255, 255)), player)
             else:
                 self.win.blit(self.font.render("Press E to grab book", True, (255, 255, 255)), player)
 
     def read(self, player):
-        if self.book >= 1:
-            if self.bookshelf.collidepoint((player[0] + 25, player[1] + 25)):
+        if self.book >= 1 and not self.read_book:
+            if self.table.collidepoint((player[0] + 25, player[1] + 25)):
                 if pygame.key.get_pressed()[pygame.K_e]:
                     self.win.blit(self.font.render("You have read the book", True, (255, 255, 255)), player)
+                    pygame.display.flip()
+                    time.sleep(1)
+                    self.read_book = True
                 else:
                     self.win.blit(self.font.render("Press E to read book", True, (255, 255, 255)), player)
-
-
 
 
 class Bathroom:
@@ -64,14 +74,25 @@ class Bathroom:
         self.win = surf
         self.time = random.randint(20, 120)
         self.clock = 0
-        # self.img = pygame.image.load("images\\")
+        self.toilet = pygame.draw.rect(self.win, (0, 0, 255), (700, 500, 50 ,50))
         self.position = [x, y]
         self.font = pygame.font.SysFont("Arial", 32)
+        self.flush = False
 
-    # def draw(self):
-    #   self.win.blit(self.img, self.position)
+    def draw(self):
+        pygame.draw.rect(self.win, (0, 0, 255), (700, 500, 50, 50))
 
     def timer(self, dt, player):
         self.clock += dt
         if self.time <= int(self.clock) <= self.time + 5:
             self.win.blit(self.font.render("I need to use the bathroom", True, (255, 255, 255)), (250, 0))
+
+    def number2(self, player):
+        if self.toilet.collidepoint((player[0] + 25, player[1] + 25)) and not self.flush:
+            if pygame.key.get_pressed()[pygame.K_e] and not self.flush:
+                self.win.blit(self.font.render("I feel better now", True, (255, 255, 255)), player)
+                pygame.display.flip()
+                time.sleep(1)
+                self.flush = True
+            else:
+                self.win.blit(self.font.render("Press E to go number 2", True, (255, 255, 255)), player)
