@@ -25,7 +25,8 @@ class Bookshelves:
     def __init__(self, x, y, surf):
         self.win = surf
         self.position = [x, y]
-        self.img = pygame.draw.rect(self.win, (255, 0, 0), (self.position[0], self.position[1], 100, 100))
+        self.bookshelf = pygame.draw.rect(self.win, (255, 0, 0), (self.position[0], self.position[1], 100, 100))
+        self.table = pygame.draw.rect(self.win, (255, 0, 0), (self.position[0], self.position[1], 100, 100))
         self.font = pygame.font.SysFont("Arial", 32)
         self.text = self.font.render("Press E to pick up book", True, (255, 255, 255))
         self.book = 0
@@ -33,15 +34,29 @@ class Bookshelves:
 
     def draw(self):
         pygame.draw.rect(self.win, (255, 0, 0), (self.position[0], self.position[1], 100, 100))
+        pygame.draw.rect(self.win, (255, 255, 0), (self.position[0], self.position[1] + 200, 100, 100))
 
-    def collide(self, player):
-        if self.img.collidepoint((player[0] + 25, player[1] + 25)):
-            self.win.blit(self.font.render("Press E to grab book", True, (255, 255, 255)), player)
-            if pygame.key.get_pressed()[pygame.K_e]:
-                self.win.blit(
-                    self.font.render(("You have" + str(self.book) + "books. You have" + str(self.book_left) + "books "
-                                                                                                              "left"),
-                                     True, (255, 255, 255)), player)
+    def collect(self, player, event):
+        if self.bookshelf.collidepoint((player[0] + 25, player[1] + 25)):
+            if event.type == pygame.KEYDOWN:
+                if event.key == pygame.K_e:
+                    self.book += 1
+                    self.win.blit(
+                        self.font.render(("You have" + str(self.book) + "books. You have" + str(self.book_left) + "books "
+                                                                                                                  "left"),
+                                         True, (255, 255, 255)), player)
+            else:
+                self.win.blit(self.font.render("Press E to grab book", True, (255, 255, 255)), player)
+
+    def read(self, player):
+        if self.book >= 1:
+            if self.bookshelf.collidepoint((player[0] + 25, player[1] + 25)):
+                if pygame.key.get_pressed()[pygame.K_e]:
+                    self.win.blit(self.font.render("You have read the book", True, (255, 255, 255)), player)
+                else:
+                    self.win.blit(self.font.render("Press E to read book", True, (255, 255, 255)), player)
+
+
 
 
 class Bathroom:

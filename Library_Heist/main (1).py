@@ -1,23 +1,18 @@
 import pygame
 import player
-import objectives
 import menu
-
 pygame.init()
 
 win_w = 800
 win_h = 600
 win = pygame.display.set_mode((win_w, win_h))
-
-# Class importing
 player = player.Player(400, 300, win)
-power = objectives.Power(0, 0, win)
-books = objectives.Bookshelves(500, 0, win)
-bathroom = objectives.Bathroom(0, 400, win)
-menu_vars = menu.Variables()
+clock = pygame.time.Clock()
 
 screen = "main_menu"
-clock = pygame.time.Clock()
+
+menu_vars = menu.Variables()
+
 
 done = False
 while not done:
@@ -25,9 +20,9 @@ while not done:
     event = pygame.event.poll()
     keys = pygame.key.get_pressed()
     (mx, my) = pygame.mouse.get_pos()
-    (mouseLeft, mouseMiddle, mouseRight) = pygame.mouse.get_pressed()
+    (mouseLeft,mouseMiddle,mouseRight) = pygame.mouse.get_pressed()
 
-    # Determining which "Screen" (Main Menu, Credits, Goals, Game)
+    #Determining which "Screen" (Main Menu, Credits, Goals, Game)
 
     if screen == "main_menu":
         if mouseLeft == True:
@@ -51,22 +46,17 @@ while not done:
             if mx > 10 and mx < 780 and my > 530 and my < 580:
                 screen = "main_menu"
 
+
     if screen == "credits":
         menu.draw_credits_screen(win, menu_vars)
         if mouseLeft == True:
             if mx > 10 and mx < 780 and my > 530 and my < 580:
                 screen = "main_menu"
 
+
     if screen == "game":
-        win.fill((0, 0, 0))
-        bathroom.timer(delta_time, player.position)
-        books.draw()
-        books.read(player.position)
-        books.collect(player.position, event)
-        power.draw()
         player.draw()
         player.move(delta_time)
-        power.collide(player.position)
 
     # Exiting
     if event.type == pygame.KEYDOWN:
@@ -74,4 +64,5 @@ while not done:
             done = True
     if event.type == pygame.QUIT:
         done = True
-    pygame.display.flip()
+
+    pygame.display.update()
