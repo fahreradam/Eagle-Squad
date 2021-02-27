@@ -20,7 +20,7 @@ class Power:
 
 
 class Bookshelves:
-    """Still needs randomized"""
+    """Still needs randomized position"""
 
     def __init__(self, x, y, surf):
         self.win = surf
