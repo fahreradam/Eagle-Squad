@@ -3,7 +3,7 @@ import pygame
 class Player:
     def __init__(self, x, y, surf):
         self.position = [x, y]
-        self.img =
+        self.img = "crab.png"
         self.win = surf
 
     def draw(self):
