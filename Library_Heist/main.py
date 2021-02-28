@@ -2,6 +2,7 @@ import pygame
 import player
 import objectives
 import menu
+import tiled
 
 pygame.init()
 
