@@ -42,12 +42,6 @@ class Layer:
 class Map:
     def __init__(self, path, fname):
         self.load_file(path, fname)
-        self.map_width = 0
-        self.map_height = 0
-        self.tile_width = 0
-        self.tile_height = 0
-        self.tile_sets = []
-        self.layers = []
 
     def load_file(self, path, fname):
         try:
@@ -97,6 +91,7 @@ class Map:
 
     def draw(self, surf):
         pass
+
 
 
 M = Map("C:\\Users\\thoma\\OneDrive\\Documents\\Programming stuff\\Jason Project\\Eagle-Squad\\Library_Heist\\images\\Tiled\\", "Map 2.0.tmx")
