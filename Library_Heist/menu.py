@@ -10,6 +10,7 @@ class Variables:        #This is the pesky work-around to the "global variables"
         self.play_text = self.font.render("START", True, (255, 0, 0), None)
         self.goals_text = self.font.render("GOALS", True, (255, 255, 0), None)
         self.credits_text = self.font.render("CREDITS", True, (0, 255, 0), None)
+        self.prev_times_text = self.font.render("PREVIOUS TIMES", True, (0, 255, 255), None)
         self.exit_text = self.font.render("EXIT", True, (0, 0, 255), None)
 
         #Goals Screen Text
@@ -42,13 +43,16 @@ class Variables:        #This is the pesky work-around to the "global variables"
         self.credit7 = self.font.render("Kenny's Assets", True, (255, 255, 255), None)
         self.credit8 = self.font.render("Shawnee State University", True, (255, 255, 255), None)
 
+        self.prev_times_top_text = self.font2.render("PREVIOUS TIMES:", True, (255, 255, 255), None)
+
 def draw_menu(win, V):
     win.fill((0,0,0))
     win.blit(V.title_text, (215, 50))
     win.blit(V.play_text, (350, 150))
     win.blit(V.goals_text, (345, 200))
     win.blit(V.credits_text, (325, 250))
-    win.blit(V.exit_text, (370, 350))
+    win.blit(V.prev_times_text, (255, 300))
+    win.blit(V.exit_text, (370, 400))
 
 def draw_goals_screen(win, V):
     win.fill((0, 0, 0))
@@ -78,6 +82,25 @@ def draw_credits_screen(win, V):
     win.blit(V.credit6, (400, 200))
     win.blit(V.credit7, (400, 300))
     win.blit(V.credit8, (350, 400))
+
+    pygame.draw.rect(win, (0, 0, 255), (10, 530, 780, 50), 0)
+    win.blit(V.return_to_menu_text, (325, 530))
+
+def draw_prev_times_screen(win, V, times):
+    win.fill((0, 0, 0))
+    win.blit(V.prev_times_top_text, (200, 10))
+    i = 0
+
+    if times == []:
+        text = V.font.render("No Times to Display", True, (255, 255, 255), None)
+        win.blit(text, (20, (50 * i) + 100))
+
+    else:
+
+        while i != len(times):
+            text = V.font.render("Run " + str(i+1) + ": " + str(times[i]) + " Seconds", True, (255, 255, 255), None)
+            win.blit(text, (20, (50 * i) + 100))
+            i += 1
 
     pygame.draw.rect(win, (0, 0, 255), (10, 530, 780, 50), 0)
     win.blit(V.return_to_menu_text, (325, 530))
