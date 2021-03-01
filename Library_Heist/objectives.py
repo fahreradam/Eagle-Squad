@@ -48,6 +48,7 @@ class Power:
             else:
                 self.win.blit(self.font.render("Press E to collect paper", True, (255, 255, 255)), player)
 
+
 class Bookshelves:
     """Still needs randomized position"""
 

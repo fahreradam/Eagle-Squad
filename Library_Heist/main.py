@@ -18,9 +18,9 @@ power = objectives.Power(0, 0, win)
 books = objectives.Bookshelves(500, 0, win)
 bathroom = objectives.Bathroom(0, 400, win)
 menu_vars = menu.Variables()
-# computer = objectives.Computer(400, 300, win)
 
 screen = "main_menu"
+level = "main_room"
 clock = pygame.time.Clock()
 
 done = False
@@ -64,19 +64,20 @@ while not done:
     if screen == "game":
         win.blit(map_scale, (0, 0))
         player.draw()
-        #computer.draw()
-        #computer.printing(player.position)
-        bathroom.timer(delta_time, player.position)
-        bathroom.draw()
-        bathroom.number2(player.position)
-        books.draw()
-        books.read(player.position)
-        books.collect(player.position, event)
-        power.draw()
-        power.printing(player.position)
+        bathroom.timer(delta_time)
         player.move(delta_time)
-        power.collide(player.position)
 
+        if level == "main_room":
+            books.draw()
+            books.read(player.position)
+            books.collect(player.position, event)
+            power.printing(player.position)
+
+        if level == "bathroom":
+            bathroom.draw()
+            bathroom.number2(player.position)
+            power.draw()
+            power.collide(player.position)
     # Exiting
     if event.type == pygame.KEYDOWN:
         if event.key == pygame.K_ESCAPE:

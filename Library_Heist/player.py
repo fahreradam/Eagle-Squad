@@ -7,7 +7,6 @@ class Player:
         self.img = pygame.image.load("images\\DO NOT USE. ONLY  FOR TESTING.png")
         self.img_scale = pygame.transform.scale(self.img, (50, 50))
         self.win = surf
-        self.size = [self.img_scale.get_width(), self.img_scale.get_height()]
         self.img_scale.set_colorkey((255, 255, 255))
         self.speed = 100
 
