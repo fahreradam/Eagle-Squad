@@ -2,21 +2,25 @@ import pygame
 import player
 import objectives
 import menu
+import tiled
 
 pygame.init()
 
 win_w = 800
 win_h = 600
 win = pygame.display.set_mode((win_w, win_h))
+map = pygame.image.load("images\\Map.png")
+map_scale = pygame.transform.scale(map, (win_w, win_h))
 
 # Class importing
-player = player.Player(400, 300, win)
+player = player.Player(11, 413, win)
 power = objectives.Power(0, 0, win)
 books = objectives.Bookshelves(500, 0, win)
 bathroom = objectives.Bathroom(0, 400, win)
 menu_vars = menu.Variables()
 
 screen = "main_menu"
+level = "main_room"
 clock = pygame.time.Clock()
 
 done = False
@@ -58,16 +62,22 @@ while not done:
                 screen = "main_menu"
 
     if screen == "game":
-        win.fill((0, 0, 0))
-        bathroom.timer(delta_time, player.position)
-        books.draw()
-        books.read(player.position)
-        books.collect(player.position, event)
-        power.draw()
+        win.blit(map_scale, (0, 0))
         player.draw()
+        bathroom.timer(delta_time)
         player.move(delta_time)
-        power.collide(player.position)
 
+        if level == "main_room":
+            books.draw()
+            books.read(player.position)
+            books.collect(player.position, event)
+            power.printing(player.position)
+
+        if level == "bathroom":
+            bathroom.draw()
+            bathroom.number2(player.position)
+            power.draw()
+            power.collide(player.position)
     # Exiting
     if event.type == pygame.KEYDOWN:
         if event.key == pygame.K_ESCAPE:

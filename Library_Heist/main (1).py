@@ -1,6 +1,7 @@
 import pygame
 import player
 import menu
+
 pygame.init()
 
 win_w = 800
@@ -13,16 +14,15 @@ screen = "main_menu"
 
 menu_vars = menu.Variables()
 
-
 done = False
 while not done:
     delta_time = clock.tick() / 1000
     event = pygame.event.poll()
     keys = pygame.key.get_pressed()
     (mx, my) = pygame.mouse.get_pos()
-    (mouseLeft,mouseMiddle,mouseRight) = pygame.mouse.get_pressed()
+    (mouseLeft, mouseMiddle, mouseRight) = pygame.mouse.get_pressed()
 
-    #Determining which "Screen" (Main Menu, Credits, Goals, Game)
+    # Determining which "Screen" (Main Menu, Credits, Goals, Game)
 
     if screen == "main_menu":
         if mouseLeft == True:
@@ -46,13 +46,11 @@ while not done:
             if mx > 10 and mx < 780 and my > 530 and my < 580:
                 screen = "main_menu"
 
-
     if screen == "credits":
         menu.draw_credits_screen(win, menu_vars)
         if mouseLeft == True:
             if mx > 10 and mx < 780 and my > 530 and my < 580:
                 screen = "main_menu"
-
 
     if screen == "game":
         player.draw()
