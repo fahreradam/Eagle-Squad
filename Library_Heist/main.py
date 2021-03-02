@@ -17,7 +17,7 @@ map = pygame.image.load("images\\Map.png")
 map_scale = pygame.transform.scale(map, (win_w, win_h))
 
 # Class importing
-player = player.Player(11, 413, win)
+player = player.Player(11, 413)
 power = objectives.Power(0, 0, win)
 books = objectives.Bookshelves(500, 0, win)
 bathroom = objectives.Bathroom(0, 400, win)
@@ -114,7 +114,7 @@ while not done:
 
     if screen == "game":
         win.blit(map_scale, (0, 0))
-        player.draw()
+        player.draw(win)
         bathroom.timer(delta_time)
         player.move(delta_time)
 

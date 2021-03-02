@@ -2,16 +2,15 @@ import pygame
 
 
 class Player:
-    def __init__(self, x, y, surf):
+    def __init__(self, x, y):
         self.position = [x, y]
         self.img = pygame.image.load("images\\DO NOT USE. ONLY  FOR TESTING.png")
         self.img_scale = pygame.transform.scale(self.img, (50, 50))
-        self.win = surf
         self.img_scale.set_colorkey((255, 255, 255))
         self.speed = 100
 
-    def draw(self):
-        self.win.blit(self.img_scale, self.position)
+    def draw(self, surf):
+        surf.blit(self.img_scale, self.position)
 
     def move(self, dt):
         keys = pygame.key.get_pressed()
