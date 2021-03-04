@@ -121,6 +121,90 @@ class Player:
             if 32 <= self.position[0] <= 30:
                 self.position[0] = 32
 
+        if pygame.Rect(609, 170, 124, 32).collidepoint(self.position[0] + 15, self.position[1] + 30):
+            if self.position[1] + 30 <= 171:
+                self.position[1] = 170 - 30
+            if self.position[1] + 30 >= 200:
+                self.position[1] = 202 - 30
+        if pygame.Rect(609, 170, 124, 32).collidepoint(self.position[0] + 23, self.position[1] + 30):
+            if self.position[0] + 23 <= 610:
+                self.position[0] = 609 - 23
+        if pygame.Rect(609, 170, 124, 32).collidepoint(self.position[0] + 7, self.position[1] + 30):
+            if self.position[0] + 7 >= 730:
+                self.position[0] = 733 - 7
+
+        if pygame.Rect(258, 218, 187, 32).collidepoint(self.position[0] + 15, self.position[1] + 30):
+            if self.position[1] + 30 <= 220:
+                self.position[1] = 218 - 30
+            if self.position[1] + 30 >= 249:
+                self.position[1] = 250 - 30
+        if pygame.Rect(258, 218, 187, 32).collidepoint(self.position[0] + 23, self.position[1] + 30):
+            if self.position[0] + 23 <= 260:
+                self.position[0] = 258 - 23
+        if pygame.Rect(258, 218, 187, 32).collidepoint(self.position[0] + 7, self.position[1] + 30):
+            if self.position[0] + 7 >= 443:
+                self.position[0] = 445 - 7
+
+        if pygame.Rect(482, 218, 254, 32).collidepoint(self.position[0] + 15, self.position[1] + 30):
+            if self.position[1] + 30 <= 220:
+                self.position[1] = 218 - 30
+            if self.position[1] + 30 >= 249:
+                self.position[1] = 250 - 30
+        if pygame.Rect(482, 218, 254, 32).collidepoint(self.position[0] + 23, self.position[1] + 30):
+            if self.position[0] + 23 <= 484:
+                self.position[0] = 482 - 23
+        if pygame.Rect(482, 218, 254, 32).collidepoint(self.position[0] + 7, self.position[1] + 30):
+            if self.position[0] + 7 >= 734:
+                self.position[0] = 736 - 7
+
+        if pygame.Rect(258, 266, 188, 32).collidepoint(self.position[0] + 15, self.position[1] + 30):
+            if self.position[1] + 30 <= 268:
+                self.position[1] = 266 - 30
+            if self.position[1] + 30 >= 296:
+                self.position[1] = 298 - 30
+        if pygame.Rect(258, 266, 188, 32).collidepoint(self.position[0] + 23, self.position[1] + 30):
+            if self.position[0] + 23 <= 259:
+                self.position[0] = 258 - 23
+        if pygame.Rect(258, 266, 188, 32).collidepoint(self.position[0] + 7, self.position[1] + 30):
+            if self.position[0] + 7 >= 444:
+                self.position[0] = 446 - 7
+
+        if pygame.Rect(482, 266, 254, 32).collidepoint(self.position[0] + 15, self.position[1] + 30):
+            if self.position[1] + 30 <= 268:
+                self.position[1] = 266 - 30
+            if self.position[1] + 30 >= 296:
+                self.position[1] = 298 - 30
+        if pygame.Rect(482, 266, 254, 32).collidepoint(self.position[0] + 23, self.position[1] + 30):
+            if self.position[0] + 23 <= 484:
+                self.position[0] = 482 - 23
+        if pygame.Rect(482, 266, 254, 32).collidepoint(self.position[0] + 7, self.position[1] + 30):
+            if self.position[0] + 7 >= 734:
+                self.position[0] = 736 - 7
+
+        if pygame.Rect(258, 314, 188, 32).collidepoint(self.position[0] + 15, self.position[1] + 30):
+            if self.position[1] + 30 <= 316:
+                self.position[1] = 314 - 30
+            if self.position[1] + 30 >= 344:
+                self.position[1] = 346 - 30
+        if pygame.Rect(258, 314, 188, 32).collidepoint(self.position[0] + 23, self.position[1] + 30):
+            if self.position[0] + 23 <= 260:
+                self.position[0] = 258 - 23
+        if pygame.Rect(258, 314, 188, 32).collidepoint(self.position[0] + 7, self.position[1] + 30):
+            if self.position[0] + 7 >= 444:
+                self.position[0] = 446 - 7
+
+        if pygame.Rect(482, 314, 254, 32).collidepoint(self.position[0] + 15, self.position[1] + 30):
+            if self.position[1] + 30 <= 316:
+                self.position[1] = 314 - 30
+            if self.position[1] + 30 >= 344:
+                self.position[1] = 346 - 30
+        if pygame.Rect(482, 314, 254, 32).collidepoint(self.position[0] + 23, self.position[1] + 30):
+            if self.position[0] + 23 <= 484:
+                self.position[0] = 482 - 23
+        if pygame.Rect(482, 314, 254, 32).collidepoint(self.position[0] + 7, self.position[1] + 30):
+            if self.position[0] + 7 >= 734:
+                self.position[0] = 736 - 7
+
     def bath_collisions(self):
         if self.position[0] <= 0:
             if 95 <= self.position[1] + 7 and self.position[1] + 50 <= 145:
