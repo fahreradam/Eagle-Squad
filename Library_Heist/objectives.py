@@ -96,14 +96,12 @@ class Bookshelves:
 
     def read(self, player):
         if self.book >= 1 and not self.read_book:
-            if pygame.Rect(159, 36, 95, 54).collidepoint(player[0] + 25, player[1] + 25) or pygame.Rect(321, 36, 95,
-                                                                                                        54).collidepoint(
-                player[0] + 25, player[1] + 25) or pygame.Rect(483, 36, 95, 54).collidepoint(player[0] + 25, player[
-                                                                                                                 1] + 25) or pygame.Rect(
-                645, 36, 95, 54).collidepoint(player[0] + 25, player[1] + 25) or pygame.Rect(321, 127, 95,
-                                                                                             54).collidepoint(
-                player[0] + 25, player[1] + 25) or pygame.Rect(483, 127, 95, 54).collidepoint(player[0] + 25,
-                                                                                              player[1] + 25):
+            if pygame.Rect(159, 36, 95, 54).collidepoint(player[0] + 25, player[1] + 25) or \
+                    pygame.Rect(321, 36, 95, 54).collidepoint(player[0] + 25, player[1] + 25) or \
+                    pygame.Rect(483, 36, 95, 54).collidepoint(player[0] + 25, player[1] + 25) or \
+                    pygame.Rect(645, 36, 95, 54).collidepoint(player[0] + 25, player[1] + 25) or \
+                    pygame.Rect(321, 127, 95, 54).collidepoint(player[0] + 25, player[1] + 25) or \
+                    pygame.Rect(483, 127, 95, 54).collidepoint(player[0] + 25, player[1] + 25):
                 if pygame.key.get_pressed()[pygame.K_e]:
                     self.win.blit(self.font.render("You have read the book", True, (255, 255, 255)), player)
                     pygame.display.flip()
@@ -162,6 +160,3 @@ class Ending:
         text = self.font.render("You Lose", True, self.color)
         self.win.blit(text, (300, 300))
         pygame.display.flip()
-
-
-

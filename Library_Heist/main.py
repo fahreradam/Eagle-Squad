@@ -7,6 +7,7 @@ import os
 from os import path
 import time
 import enemy
+
 # import tiled
 
 pygame.init()
@@ -20,7 +21,6 @@ current_map = maps[0]
 screen = "main_menu"
 level = "main_room"
 
-
 # Class importing
 player = player.Player(21, 385)
 enemy = enemy.Enemy(400, 200)
@@ -29,7 +29,6 @@ books = objectives.Bookshelves(500, 0, win)
 bathroom = objectives.Bathroom(0, 400, win)
 ending = objectives.Ending(win)
 menu_vars = menu.Variables()
-
 
 clock = pygame.time.Clock()
 menuClock = 0
@@ -54,11 +53,14 @@ else:
 
 save_time = False
 
+
 def menu_clock():
     global menuClock
     menuClock = pygame.time.get_ticks() / 1000  # This determins how long the user is in the Menus, used for the in-game timer.
 
+
 music = True
+
 
 def check_music(event):
     global music
@@ -78,6 +80,7 @@ def check_music(event):
             else:
                 pygame.mixer.music.stop()
 
+
 done = False
 while not done:
     delta_time = clock.tick() / 1000
@@ -88,8 +91,6 @@ while not done:
     check_music(event)
 
     # Determining which "Screen" (Main Menu, Credits, Goals, Game)
-    if pygame.mouse.get_pressed()[0]:
-        print((mx, my))
     if screen == "main_menu":
         menu_clock()
         if save_time == True:
@@ -126,7 +127,6 @@ while not done:
             if mx > 10 and mx < 780 and my > 530 and my < 580:
                 if game_playing == False:
                     screen = "main_menu"
-
                 else:
                     screen = "game"
                     win.fill((0, 0, 0))
@@ -155,10 +155,11 @@ while not done:
     if screen == "game":
         win.fill((0, 0, 0))
         win.blit(current_map, (0, 0))
+        player.draw(win)
         if bathroom.point + power.point + books.point >= 5:
             screen = "win"
-        print(bathroom.point + power.point + books.point)
-        player.draw(win)
+            save_time = True
+            game_playing = False
         if player.health == 3:
             win.blit(heart_scale, (0, 0))
             win.blit(heart_scale, (30, 0))
@@ -176,7 +177,7 @@ while not done:
         if level == "main_room":
             player.img_scale = pygame.transform.scale(player.img, (30, 30))
             current_map = maps[0]
-            books.read(player.position,)
+            books.read(player.position, )
             books.collect(player.position, event)
             power.printing(player.position)
             player.main_collision()
@@ -190,17 +191,15 @@ while not done:
                 player.position = [21, 385]
                 if player.health <= 0:
                     screen = "lose"
+                    save_time = True
+                    game_playing = False
             if enemy.distance < 125:
                 enemy.point_towards(player.position)
                 enemy.movetowards(1, delta_time)
 
-            if player.bathroom.collidepoint(player.position[0] + 15, player.position[1] + 15):
+            if player.bathroom.collidepoint(int(player.position[0]) + 15, int(player.position[1]) + 15):
                 level = "bathroom"
                 player.position = [2, 90]
-            if keys[pygame.K_b]:
-                level = "bathroom"
-                player.position = [2, 90]
-
 
         if level == "bathroom":
             current_map = maps[1]
@@ -224,7 +223,6 @@ while not done:
             ending.winning()
         if screen == "lose":
             ending.lose()
-
 
     # Exiting
     if event.type == pygame.KEYDOWN:
