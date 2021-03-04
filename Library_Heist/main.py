@@ -127,8 +127,6 @@ while not done:
         player.draw(win)
         bathroom.timer(delta_time)
         player.move(delta_time)
-        enemy.draw(win)
-        enemy.movement(delta_time)
 
         game_clock = pygame.time.get_ticks() / 1000 - menuClock  # This is used for how long the game is played.
 
@@ -140,6 +138,8 @@ while not done:
             power.printing(player.position)
             player.main_collision()
             enemy.main_collision()
+            enemy.draw(win)
+            enemy.movement(delta_time)
             if player.bathroom.collidepoint(player.position[0] + 15, player.position[1] + 15):
                 level = "bathroom"
                 player.position = [2, 90]
