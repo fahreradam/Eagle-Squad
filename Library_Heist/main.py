@@ -221,8 +221,10 @@ while not done:
 
         if screen == "win":
             ending.winning()
+            done = True
         if screen == "lose":
             ending.lose()
+            done = True
 
     # Exiting
     if event.type == pygame.KEYDOWN:

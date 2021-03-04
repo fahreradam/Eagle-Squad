@@ -154,9 +154,11 @@ class Ending:
         text = self.font.render("You Win", True, self.color)
         self.win.blit(text, (300, 300))
         pygame.display.flip()
+        time.sleep(5)
 
     def lose(self):
         self.win.fill((0, 0, 0))
         text = self.font.render("You Lose", True, self.color)
         self.win.blit(text, (300, 300))
         pygame.display.flip()
+        time.sleep(5)
