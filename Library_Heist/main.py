@@ -34,6 +34,8 @@ menu_vars = menu.Variables()
 clock = pygame.time.Clock()
 menuClock = 0
 game_clock = 0
+heart = pygame.image.load("images\\Heart attempt.png")
+heart_scale = pygame.transform.scale(heart, (20, 22))
 blank_list = []  # This is just for writing the Save File, other than that no use.
 game_playing = False
 
@@ -160,6 +162,15 @@ while not done:
         if bathroom.point + power.point + books.point == 5:
             screen = "win"
         player.draw(win)
+        if player.health == 3:
+            win.blit(heart_scale, (0, 0))
+            win.blit(heart_scale, (30, 0))
+            win.blit(heart_scale, (60, 0))
+        if player.health == 2:
+            win.blit(heart_scale, (0, 0))
+            win.blit(heart_scale, (30, 0))
+        if player.health == 1:
+            win.blit(heart_scale, (0, 0))
         bathroom.timer(delta_time)
         player.move(delta_time)
 
