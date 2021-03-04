@@ -11,11 +11,8 @@ class Player:
         self.bathroom = pygame.Rect(479, 480, 33, 24)
         self.health = 3
 
-
-
     def draw(self, surf):
         surf.blit(self.img_scale, self.position)
-
 
     def move(self, dt):
         keys = pygame.key.get_pressed()
@@ -31,7 +28,6 @@ class Player:
 
         if keys[pygame.K_s]:
             self.position[1] += self.speed * dt
-
 
     def main_collision(self):
         """Collision of the walls"""
