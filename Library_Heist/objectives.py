@@ -7,7 +7,7 @@ class Power:
     def __init__(self, x, y, surf):
         self.win = surf
         self.position = [x, y]
-        self.img = pygame.draw.rect(self.win, (255, 0, 0), (self.position[0], self.position[1], 100, 100))
+        self.power_switch = pygame.Rect(363, 0, 58, 79)
         self.font = pygame.font.SysFont("Arial", 32)
         self.power_on = False
         self.pc = [pygame.Rect(102, 192, 56, 24), pygame.Rect(102, 239, 56, 24), pygame.Rect(102, 286, 56, 24), pygame.Rect(102, 333, 56, 24)]
@@ -16,7 +16,7 @@ class Power:
         self.paper = False
 
     def collide(self, player):
-        if self.img.collidepoint((player[0] + 25, player[1] + 25)) and not self.power_on:
+        if self.power_switch.collidepoint(player[0] + 25, player[1] + 50) and not self.power_on:
             if pygame.key.get_pressed()[pygame.K_e]:
                 self.win.blit(self.font.render("You have turned on the power", True, (255, 255, 255)), player)
                 pygame.display.flip()
@@ -34,7 +34,7 @@ class Power:
                 self.print = True
             else:
                 self.win.blit(self.font.render("Press E to print", True, (255, 255, 255)), player)
-        if self.printer.collidepoint((player[0] + 25, player[1] + 25)) and self.print and not self.paper:
+        if self.printer.collidepoint(player[0] + 25, player[1] + 25) and self.print and not self.paper:
             if pygame.key.get_pressed()[pygame.K_e] and not self.paper:
                 self.win.blit(self.font.render("You've collected the paper", True, (255, 255, 255)), player)
                 pygame.display.flip()
@@ -60,7 +60,7 @@ class Bookshelves:
         self.collected = False
 
     def collect(self, player, event):
-        if self.bookshelves[2].collidepoint((player[0] + 25, player[1] + 25)) and not self.collected:
+        if self.bookshelves[2].collidepoint(player[0] + 25, player[1] + 25) and not self.collected:
             if pygame.key.get_pressed()[pygame.K_e]:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_e:
@@ -106,7 +106,7 @@ class Bathroom:
             self.flush = False
 
     def number2(self, player):
-        if self.toilet[0].collidepoint((player[0] + 25, player[1] + 25)) and not self.flush:
+        if self.toilet[0].collidepoint(player[0] + 25, player[1] + 25) and not self.flush:
             if pygame.key.get_pressed()[pygame.K_e] and not self.flush:
                 self.win.blit(self.font.render("I feel better now", True, (255, 255, 255)), player)
                 pygame.display.flip()

@@ -110,4 +110,16 @@ class Player:
                 self.position[1] = 193 - 30
             if 32 <= self.position[0] <= 30:
                 self.position[0] = 32
-       # if pygame.Rect(99, 224, 27, 16).collidepoint(self.position[0] + 15, )
+    def bath_collisions(self):
+        if self.position[0] <= 0:
+            if 95 <= self.position[1] + 7 and self.position[1] + 50 <= 145:
+                pass
+            else:
+                self.position[0] = 0
+        if self.position[0] + 50 >= 432:
+            self.position[0] = 432 - 50
+        if self.position[1] <= 0:
+            self.position[1] = 0
+        if self.position[1] + 50 >= 241:
+            self.position[1] = 241 - 50
+

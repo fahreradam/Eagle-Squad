@@ -129,23 +129,29 @@ while not done:
         game_clock = pygame.time.get_ticks() / 1000 - menuClock  # This is used for how long the game is played.
 
         if level == "main_room":
+            player.img_scale = pygame.transform.scale(player.img, (30, 30))
+            current_map = maps[0]
             books.read(player.position)
             books.collect(player.position, event)
             power.printing(player.position)
             player.main_collision()
             if player.bathroom.collidepoint(player.position[0] + 15, player.position[1] + 15):
                 level = "bathroom"
-                player.position = [0, 98]
+                player.position = [0, 90]
             if keys[pygame.K_b]:
                 level = "bathroom"
                 player.position = [0, 90]
 
 
         if level == "bathroom":
+            player.bath_collisions()
             current_map = maps[1]
             player.img_scale = pygame.transform.scale(player.img, (50, 50))
             bathroom.number2(player.position)
             power.collide(player.position)
+            if player.position[0] <= -25:
+                level = "main_room"
+                player.position = [442, 474]
 
         if keys[pygame.K_BACKSPACE]:  # This emulates the game "ending". All three peices of code need to be put in
             screen = "main_menu"  # wherever the actual "game ending" code is.
