@@ -23,7 +23,6 @@ class Enemy(Player):
             self.dir1 = random.choice(self.random_direction1)
             self.dir2 = random.choice(self.random_direction2)
             self.timer = 200
-            print(self.dir1)
 
     def distanceto(self, playerx, playery):
         self.distance = math.sqrt((self.position[0] - playerx) ** 2 + (self.position[1] - playery) ** 2)
