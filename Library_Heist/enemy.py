@@ -8,8 +8,8 @@ class Enemy(Player):
         self.position = [x, y]
         self.timer = 100
         self.speed = 100
-        self.random_direction1 = [-80, 80, 0]
-        self.random_direction2 = [-80, 80, 0]
+        self.random_direction1 = [-70, 70, 0]
+        self.random_direction2 = [-70, 70, 0]
         self.dir1 = 0
         self.dir2 = 0
         self.orientation = 180
