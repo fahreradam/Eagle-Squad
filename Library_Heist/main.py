@@ -174,13 +174,18 @@ while not done:
             player.main_collision()
             enemy.main_collision()
             enemy.draw(win)
-            enemy.movement(delta_time)
             enemy.distanceto(player.position[0], player.position[1])
+            if enemy.distance >= 100:
+                enemy.movement(delta_time)
             if enemy.distance <= 30:
                 player.health = player.health - 1
                 player.position = [21, 385]
                 if player.health <= 0:
                     screen = "lose"
+            if enemy.distance <= 100:
+                enemy.point_towards(player.position)
+                enemy.movetowards(1, delta_time)
+
             if player.bathroom.collidepoint(player.position[0] + 15, player.position[1] + 15):
                 level = "bathroom"
                 player.position = [2, 90]
