@@ -32,8 +32,7 @@ class Player:
             self.position[1] += self.speed * dt
 
     def main_collision(self):
-        # print(self.position)
-        """Collision Of the walls"""
+        """Collision of the walls"""
         # Collision with y for the walls
         if self.position[1] + 30 >= 433 and self.position[0] <= 122:
             self.position[1] = 433 - 30
@@ -47,7 +46,6 @@ class Player:
             self.position[1] = 528 - 30
         if self.position[1] + 30 >= 552:
             self.position[1] = 552 - 30
-
         if self.position[1] + 30 >= 433 and 484 <= self.position[0] + 30 <= 511:
             if 505 >= self.position[1] + 30 >= 479:
                 pass
@@ -77,7 +75,6 @@ class Player:
             self.position[0] = 261
         if self.position[0] <= 292 and self.position[1] >= 529 - 30:
             self.position[0] = 292
-
         if self.position[0] + 30 >= 472 and 554 >= self.position[1] + 30 >= 504:
             self.position[0] = 472 - 30
         if self.position[0] + 30 >= 472 and 481 >= self.position[1] + 30 >= 434:
@@ -117,4 +114,16 @@ class Player:
                 self.position[1] = 193 - 30
             if 32 <= self.position[0] <= 30:
                 self.position[0] = 32
-       # if pygame.Rect(99, 224, 27, 16).collidepoint(self.position[0] + 15, )
+
+    def bath_collisions(self):
+        if self.position[0] <= 0:
+            if 95 <= self.position[1] + 7 and self.position[1] + 50 <= 145:
+                pass
+            else:
+                self.position[0] = 0
+        if self.position[0] + 50 >= 432:
+            self.position[0] = 432 - 50
+        if self.position[1] <= 0:
+            self.position[1] = 0
+        if self.position[1] + 50 >= 241:
+            self.position[1] = 241 - 50

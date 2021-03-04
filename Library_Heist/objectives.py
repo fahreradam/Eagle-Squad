@@ -1,7 +1,7 @@
 import pygame
 import random
 import time
-import player
+
 
 class Power:
     def __init__(self, x, y, surf):
@@ -15,9 +15,9 @@ class Power:
         self.print = False
         self.paper = False
 
-    def collide(self, player, gamepad):
+    def collide(self, player):
         if self.img.collidepoint((player[0] + 25, player[1] + 25)) and not self.power_on:
-            if pygame.key.get_pressed()[pygame.K_e] or gamepad.get_button(0):
+            if pygame.key.get_pressed()[pygame.K_e]:
                 self.win.blit(self.font.render("You have turned on the power", True, (255, 255, 255)), player)
                 pygame.display.flip()
                 time.sleep(1)
@@ -25,18 +25,17 @@ class Power:
             else:
                 self.win.blit(self.font.render("Press E to turn on power", True, (255, 255, 255)), player)
 
-    def printing(self, player, gamepad):
+    def printing(self, player):
         if self.pc[0].collidepoint(player[0] + 25, player[1] + 25) and self.power_on and not self.print:
-            if pygame.key.get_pressed()[pygame.K_e] or gamepad.get_button(0) and not self.print:
+            if pygame.key.get_pressed()[pygame.K_e] and not self.print:
                 self.win.blit(self.font.render("I wonder where it printed", True, (255, 255, 255)), player)
                 pygame.display.flip()
                 time.sleep(1)
                 self.print = True
             else:
                 self.win.blit(self.font.render("Press E to print", True, (255, 255, 255)), player)
-
         if self.printer.collidepoint((player[0] + 25, player[1] + 25)) and self.print and not self.paper:
-            if pygame.key.get_pressed()[pygame.K_e] or gamepad.get_button(0) and not self.paper:
+            if pygame.key.get_pressed()[pygame.K_e] and not self.paper:
                 self.win.blit(self.font.render("You've collected the paper", True, (255, 255, 255)), player)
                 pygame.display.flip()
                 time.sleep(1)
@@ -60,11 +59,11 @@ class Bookshelves:
         self.read_book = False
         self.collected = False
 
-    def collect(self, player, event, gamepad):
+    def collect(self, player, event):
         if self.bookshelves[2].collidepoint((player[0] + 25, player[1] + 25)) and not self.collected:
-            if pygame.key.get_pressed()[pygame.K_e] or gamepad.get_button(0):
-                if event.type == pygame.KEYDOWN or event.type == pygame.JOYBUTTONDOWN:
-                    if pygame.key.get_pressed()[pygame.K_e] or gamepad.get_button(0):
+            if pygame.key.get_pressed()[pygame.K_e]:
+                if event.type == pygame.KEYDOWN:
+                    if event.key == pygame.K_e:
                         self.book += 1
                 self.win.blit(
                     self.font.render(
@@ -77,10 +76,10 @@ class Bookshelves:
             else:
                 self.win.blit(self.font.render("Press E to grab book", True, (255, 255, 255)), player)
 
-    def read(self, player, gamepad):
+    def read(self, player):
         if self.book >= 1 and not self.read_book:
             if self.tables[5].collidepoint(player[0] + 25, player[1] + 25):
-                if pygame.key.get_pressed()[pygame.K_e] or gamepad.get_button(0):
+                if pygame.key.get_pressed()[pygame.K_e]:
                     self.win.blit(self.font.render("You have read the book", True, (255, 255, 255)), player)
                     pygame.display.flip()
                     time.sleep(1)
@@ -106,9 +105,9 @@ class Bathroom:
             self.win.blit(self.font.render("I need to use the bathroom", True, (255, 255, 255)), (250, 0))
             self.flush = False
 
-    def number2(self, player, gamepad):
+    def number2(self, player):
         if self.toilet[0].collidepoint((player[0] + 25, player[1] + 25)) and not self.flush:
-            if pygame.key.get_pressed()[pygame.K_e] or gamepad.get_button(0) and not self.flush:
+            if pygame.key.get_pressed()[pygame.K_e] and not self.flush:
                 self.win.blit(self.font.render("I feel better now", True, (255, 255, 255)), player)
                 pygame.display.flip()
                 time.sleep(1)
