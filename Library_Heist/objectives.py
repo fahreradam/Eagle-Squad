@@ -7,7 +7,7 @@ class Power:
     def __init__(self, x, y, surf):
         self.win = surf
         self.position = [x, y]
-        self.power_switch = pygame.draw.rect(self.win, (255, 0, 0), (self.position[0], self.position[1], 100, 100))
+        self.power_switch = pygame.Rect(352, 0, 74, 79)
         self.font = pygame.font.SysFont("Arial", 32)
         self.power_on = False
         self.pc = [pygame.Rect(102, 192, 56, 24), pygame.Rect(102, 239, 56, 24), pygame.Rect(102, 286, 56, 24),
@@ -18,7 +18,7 @@ class Power:
         self.selection = random.randint(0, 3)
 
     def collide(self, player):
-        if self.power_switch.collidepoint((player[0] + 25, player[1] + 25)) and not self.power_on:
+        if self.power_switch.collidepoint(player[0] + 25, player[1] + 25) and not self.power_on:
             if pygame.key.get_pressed()[pygame.K_e]:
                 self.win.blit(self.font.render("You have turned on the power", True, (255, 255, 255)), player)
                 pygame.display.flip()
