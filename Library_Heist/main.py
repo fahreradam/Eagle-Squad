@@ -38,7 +38,7 @@ game_playing = False
 
 pygame.mixer.init()  # This is used for the Music. Credit to ID Software
 pygame.mixer.music.load("e1m1.wav")
-#pygame.mixer.music.play(-1)
+pygame.mixer.music.play(-1)
 
 if path.exists("times.dat"):
     print("Loading Saved Data...")
@@ -51,11 +51,29 @@ else:
 
 save_time = False
 
-
 def menu_clock():
     global menuClock
     menuClock = pygame.time.get_ticks() / 1000  # This determins how long the user is in the Menus, used for the in-game timer.
 
+music = True
+
+def check_music(event, gamepad):
+    global music
+
+    if event.type == pygame.KEYDOWN or event.type == pygame.JOYBUTTONDOWN:
+        if pygame.key.get_pressed()[pygame.K_m] or gamepad.get_button(6):
+            if music == True:
+                music = False
+            else:
+                music = True
+
+            print(music)
+
+            if music == True:
+                pygame.mixer.music.play(-1)
+
+            else:
+                pygame.mixer.music.stop()
 
 done = False
 while not done:
@@ -64,6 +82,8 @@ while not done:
     keys = pygame.key.get_pressed()
     (mx, my) = pygame.mouse.get_pos()
     (mouseLeft, mouseMiddle, mouseRight) = pygame.mouse.get_pressed()
+
+    check_music(event, player.gamepad)
 
     # Determining which "Screen" (Main Menu, Credits, Goals, Game)
     if pygame.mouse.get_pressed()[0]:
@@ -89,7 +109,10 @@ while not done:
             if mx > 250 and mx < 575 and my > 300 and my < 350:
                 screen = "prev_times"
 
-            if mx > 370 and mx < 455 and my > 400 and my < 450:
+            if mx > 250 and mx < 575 and my > 350 and my < 400:
+                screen = "controls"
+
+            if mx > 370 and mx < 455 and my > 450 and my < 500:
                 done = True
 
         menu.draw_menu(win, menu_vars)
@@ -97,6 +120,10 @@ while not done:
     if screen == "goals":
         menu_clock()
         menu.draw_goals_screen(win, menu_vars)
+        if player.gamepad.get_button(1):
+            if game_playing == True:
+                screen = "game"
+                win.fill((0, 0, 0))
         if mouseLeft == True:
             if mx > 10 and mx < 780 and my > 530 and my < 580:
                 if game_playing == False:
@@ -120,6 +147,13 @@ while not done:
             if mx > 10 and mx < 780 and my > 530 and my < 580:
                 screen = "main_menu"
 
+    if screen == "controls":
+        menu_clock()
+        menu.draw_controls_screen(win, menu_vars)
+        if mouseLeft == True:
+            if mx > 10 and mx < 780 and my > 530 and my < 580:
+                screen = "main_menu"
+
     if screen == "game":
         win.fill((0, 0, 0))
         win.blit(current_map, (0, 0))
@@ -133,9 +167,9 @@ while not done:
         if level == "main_room":
             player.img_scale = pygame.transform.scale(player.img, (30, 30))
             current_map = maps[0]
-            books.read(player.position)
-            books.collect(player.position, event)
-            power.printing(player.position)
+            books.read(player.position, player.gamepad)
+            books.collect(player.position, event, player.gamepad)
+            power.printing(player.position, player.gamepad)
             player.main_collision()
             enemy.main_collision()
             enemy.draw(win)
@@ -151,8 +185,8 @@ while not done:
         if level == "bathroom":
             current_map = maps[1]
             player.img_scale = pygame.transform.scale(player.img, (50, 50))
-            bathroom.number2(player.position)
-            power.collide(player.position)
+            bathroom.number2(player.position, player.gamepad)
+            power.collide(player.position, player.gamepad)
             player.bath_collisions()
             if player.position[0] + 15 < 0:
                 level = "main_room"
@@ -162,7 +196,7 @@ while not done:
             save_time = True
             game_playing = False
 
-        if keys[pygame.K_o]:  # This is Purely for Testing.
+        if keys[pygame.K_o] or player.gamepad.get_button(7):
             screen = "goals"
             game_playing = True
 

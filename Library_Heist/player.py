@@ -9,7 +9,6 @@ class Player:
         self.img_scale.set_colorkey((0, 0, 0))
         self.speed = 100
         self.bathroom = pygame.Rect(479, 480, 33, 24)
-        self.gamepad = 0
 
         if pygame.joystick.get_count() > 0:
             self.gamepad = pygame.joystick.Joystick(0)
@@ -20,25 +19,21 @@ class Player:
 
     def move(self, dt):
         keys = pygame.key.get_pressed()
-        if pygame.joystick.get_count() > 0:
-            hat = self.gamepad.get_hat(0)
-            self.button = self.gamepad.get_button(0)
-            if self.gamepad.get_axis(0) <= -0.5 or hat[0] == -1:
-                self.position[0] -= self.speed * dt
-            if self.gamepad.get_axis(0) >= 0.5 or hat[0] == 1:
-                self.position[0] += self.speed * dt
-            if self.gamepad.get_axis(1) <= -0.5 or hat[1] == 1:
-                self.position[1] -= self.speed * dt
-            if self.gamepad.get_axis(1) >= 0.5 or hat[1] == -1:
-                self.position[1] += self.speed * dt
-        if keys[pygame.K_a]:
+        hat = self.gamepad.get_hat(0)
+        self.button = self.gamepad.get_button(0)
+
+        if keys[pygame.K_a] or self.gamepad.get_axis(0) <= -0.5 or hat[0] == -1:
             self.position[0] -= self.speed * dt
-        if keys[pygame.K_d]:
+
+        if keys[pygame.K_d] or self.gamepad.get_axis(0) >= 0.5 or hat[0] == 1:
             self.position[0] += self.speed * dt
-        if keys[pygame.K_w]:
+
+        if keys[pygame.K_w] or self.gamepad.get_axis(1) <= -0.5 or hat[1] == 1:
             self.position[1] -= self.speed * dt
-        if keys[pygame.K_s]:
+
+        if keys[pygame.K_s] or self.gamepad.get_axis(1) >= 0.5 or hat[1] == -1:
             self.position[1] += self.speed * dt
+
 
     def main_collision(self):
         """Collision of the walls"""
