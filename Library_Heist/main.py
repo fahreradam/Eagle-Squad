@@ -10,11 +10,11 @@ import tiled
 
 pygame.init()
 
-win_w = 800
-win_h = 600
+win_w = 1260
+win_h = 780
 win = pygame.display.set_mode((win_w, win_h))
-map = pygame.image.load("images\\Map.png")
-map_scale = pygame.transform.scale(map, (win_w, win_h))
+map = tiled.Map("C:\\Users\\thoma\\OneDrive\\Documents\\Programming stuff\\Jason Project\\Eagle-Squad\\Library_Heist\\images\\Tiled\\", "Map 2.0.tmx")
+# map_scale = pygame.transform.scale(map, (win_w, win_h))
 
 # Class importing
 player = player.Player(11, 413)
@@ -57,6 +57,7 @@ while not done:
     keys = pygame.key.get_pressed()
     (mx, my) = pygame.mouse.get_pos()
     (mouseLeft, mouseMiddle, mouseRight) = pygame.mouse.get_pressed()
+    map.draw(win, map.root)
 
     # Determining which "Screen" (Main Menu, Credits, Goals, Game)
 
@@ -113,7 +114,7 @@ while not done:
                 screen = "main_menu"
 
     if screen == "game":
-        win.blit(map_scale, (0, 0))
+        # win.blit(map_scale, (0, 0))
         player.draw(win)
         bathroom.timer(delta_time)
         player.move(delta_time)
