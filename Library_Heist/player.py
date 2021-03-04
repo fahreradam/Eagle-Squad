@@ -20,6 +20,7 @@ class Player:
     def draw(self, surf):
         surf.blit(self.img_scale, self.position)
 
+
     def move(self, dt):
         keys = pygame.key.get_pressed()
         hat = self.gamepad.get_hat(0)
