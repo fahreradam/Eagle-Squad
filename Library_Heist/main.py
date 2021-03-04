@@ -27,6 +27,7 @@ enemy = enemy.Enemy(400, 200)
 power = objectives.Power(0, 0, win)
 books = objectives.Bookshelves(500, 0, win)
 bathroom = objectives.Bathroom(0, 400, win)
+ending = objectives.Ending(win)
 menu_vars = menu.Variables()
 
 
@@ -156,7 +157,8 @@ while not done:
     if screen == "game":
         win.fill((0, 0, 0))
         win.blit(current_map, (0, 0))
-
+        if bathroom.point + power.point + books.point == 5:
+            screen = "win"
         player.draw(win)
         bathroom.timer(delta_time)
         player.move(delta_time)
@@ -175,7 +177,10 @@ while not done:
             enemy.movement(delta_time)
             enemy.distanceto(player.position[0], player.position[1])
             if enemy.distance <= 30:
-                screen = "main_menu"
+                player.health = player.health - 1
+                player.position = [21, 385]
+                if player.health <= 0:
+                    screen = "lose"
             if player.bathroom.collidepoint(player.position[0] + 15, player.position[1] + 15):
                 level = "bathroom"
                 player.position = [2, 90]
@@ -201,6 +206,12 @@ while not done:
         if keys[pygame.K_o] or player.gamepad.get_button(7):
             screen = "goals"
             game_playing = True
+
+        if screen == "win":
+            ending.win()
+        if screen == "lose":
+            ending.lose()
+
 
     # Exiting
     if event.type == pygame.KEYDOWN:

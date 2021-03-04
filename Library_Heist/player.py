@@ -9,6 +9,7 @@ class Player:
         self.img_scale.set_colorkey((0, 0, 0))
         self.speed = 100
         self.bathroom = pygame.Rect(479, 480, 33, 24)
+        self.health = 3
 
         if pygame.joystick.get_count() > 0:
             self.gamepad = pygame.joystick.Joystick(0)

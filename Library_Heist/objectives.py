@@ -17,6 +17,7 @@ class Power:
         self.print = False
         self.paper = False
         self.selection = random.randint(0, 3)
+        self.point = 0
 
     def collide(self, player, gamepad):
         if self.power_switch.collidepoint(player[0] + 25, player[1] + 25) and not self.power_on:
@@ -24,6 +25,7 @@ class Power:
                 self.win.blit(self.font.render("You have turned on the power", True, (255, 255, 255)), player)
                 pygame.display.flip()
                 time.sleep(0.5)
+                self.point = self.point + 1
                 self.power_on = True
             else:
                 self.win.blit(self.font.render("Press E to turn on power", True, (255, 255, 255)), player)
@@ -42,6 +44,7 @@ class Power:
                 self.win.blit(self.font.render("You've collected the paper", True, (255, 255, 255)), player)
                 pygame.display.flip()
                 time.sleep(0.5)
+                self.point = self.point + 1
                 self.paper = True
             else:
                 self.win.blit(self.font.render("Press E to collect paper", True, (255, 255, 255)), player)
@@ -66,6 +69,7 @@ class Bookshelves:
         self.read_book = False
         self.collected = False
         self.book_selection = random.randint(0, 6)
+        self.point = 0
 
     def collect(self, player, event, gamepad):
         if self.bookshelves[self.book_selection].collidepoint((player[0] + 25, player[1] + 25)) and not self.collected:
@@ -79,9 +83,11 @@ class Bookshelves:
                                                                                                     "left"),
                         True, (255, 255, 255)), player)
                 pygame.display.flip()
+
                 time.sleep(0.5)
                 self.book_selection = random.randint(0, 6)
             elif self.book == self.book_left:
+                self.point = self.point + 1
                 self.collected = True
 
             else:
@@ -91,16 +97,17 @@ class Bookshelves:
         if self.book >= 1 and not self.read_book:
             if pygame.Rect(159, 36, 95, 54).collidepoint(player[0] + 25, player[1] + 25) or pygame.Rect(321, 36, 95,
                                                                                                         54).collidepoint(
-                    player[0] + 25, player[1] + 25) or pygame.Rect(483, 36, 95, 54).collidepoint(player[0] + 25, player[
-                                                                                                                     1] + 25) or pygame.Rect(
-                    645, 36, 95, 54).collidepoint(player[0] + 25, player[1] + 25) or pygame.Rect(321, 127, 95,
-                                                                                                 54).collidepoint(
-                    player[0] + 25, player[1] + 25) or pygame.Rect(483, 127, 95, 54).collidepoint(player[0] + 25,
-                                                                                                  player[1] + 25):
+                player[0] + 25, player[1] + 25) or pygame.Rect(483, 36, 95, 54).collidepoint(player[0] + 25, player[
+                                                                                                                 1] + 25) or pygame.Rect(
+                645, 36, 95, 54).collidepoint(player[0] + 25, player[1] + 25) or pygame.Rect(321, 127, 95,
+                                                                                             54).collidepoint(
+                player[0] + 25, player[1] + 25) or pygame.Rect(483, 127, 95, 54).collidepoint(player[0] + 25,
+                                                                                              player[1] + 25):
                 if pygame.key.get_pressed()[pygame.K_e] or gamepad.get_button(0):
                     self.win.blit(self.font.render("You have read the book", True, (255, 255, 255)), player)
                     pygame.display.flip()
                     time.sleep(0.5)
+                    self.point = self.point + 1
                     self.read_book = True
                 else:
                     self.win.blit(self.font.render("Press E to read book", True, (255, 255, 255)), player)
@@ -117,6 +124,7 @@ class Bathroom:
         self.font = pygame.font.SysFont("Arial", 32)
         self.flush = True
         self.need = False
+        self.point = 0
 
     def timer(self, dt):
         self.clock += dt
@@ -130,6 +138,29 @@ class Bathroom:
                 self.win.blit(self.font.render("I feel better now", True, (255, 255, 255)), player)
                 pygame.display.flip()
                 time.sleep(0.5)
+                self.point = self.point + 1
                 self.flush = True
             else:
                 self.win.blit(self.font.render("Press E to go number 2", True, (255, 255, 255)), player)
+
+
+class Ending:
+    def __init__(self, win):
+        self.win = win
+        self.color = (255, 255, 255)
+        self.font = pygame.font.SysFont("Arial", 50)
+
+    def win(self):
+        self.win.fill((0, 0, 0))
+        text = self.font.render("You Win", True, self.color)
+        self.win.blit(text, (300, 300))
+        pygame.display.flip()
+
+    def lose(self):
+        self.win.fill((0, 0, 0))
+        text = self.font.render("You Lose", True, self.color)
+        self.win.blit(text, (300, 300))
+        pygame.display.flip()
+
+
+
