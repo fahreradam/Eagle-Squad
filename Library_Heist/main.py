@@ -6,34 +6,37 @@ import pickle
 import os
 from os import path
 import time
-import tiled
+#import tiled
 
 pygame.init()
 
 win_w = 800
 win_h = 600
 win = pygame.display.set_mode((win_w, win_h))
-map = pygame.image.load("images\\Map.png")
-map_scale = pygame.transform.scale(map, (win_w, win_h))
+main_room = pygame.image.load("images\\Tester.png")
+maps = [pygame.transform.scale(main_room, (win_w, win_h)), pygame.image.load("images\\Bathroom.png")]
+current_map = maps[0]
+screen = "main_menu"
+level = "main_room"
+
 
 # Class importing
-player = player.Player(11, 413)
+player = player.Player(21, 385)
 power = objectives.Power(0, 0, win)
 books = objectives.Bookshelves(500, 0, win)
 bathroom = objectives.Bathroom(0, 400, win)
 menu_vars = menu.Variables()
 
-screen = "main_menu"
-level = "main_room"
+
 clock = pygame.time.Clock()
 menuClock = 0
 game_clock = 0
-blank_list = [] #This is just for writing the Save File, other than that no use.
+blank_list = []  # This is just for writing the Save File, other than that no use.
 game_playing = False
 
-pygame.mixer.init()#This is used for the Music. Credit to ID Software
+pygame.mixer.init()  # This is used for the Music. Credit to ID Software
 pygame.mixer.music.load("e1m1.wav")
-pygame.mixer.music.play(-1)
+#pygame.mixer.music.play(-1)
 
 if path.exists("times.dat"):
     print("Loading Saved Data...")
@@ -46,9 +49,11 @@ else:
 
 save_time = False
 
+
 def menu_clock():
     global menuClock
     menuClock = pygame.time.get_ticks() / 1000  # This determins how long the user is in the Menus, used for the in-game timer.
+
 
 done = False
 while not done:
@@ -59,7 +64,8 @@ while not done:
     (mouseLeft, mouseMiddle, mouseRight) = pygame.mouse.get_pressed()
 
     # Determining which "Screen" (Main Menu, Credits, Goals, Game)
-
+    if pygame.mouse.get_pressed()[0]:
+        print((mx, my))
     if screen == "main_menu":
         menu_clock()
         if save_time == True:
@@ -96,7 +102,7 @@ while not done:
 
                 else:
                     screen = "game"
-                    win.fill((0,0,0))
+                    win.fill((0, 0, 0))
 
     if screen == "prev_times":
         menu_clock()
@@ -113,7 +119,9 @@ while not done:
                 screen = "main_menu"
 
     if screen == "game":
-        win.blit(map_scale, (0, 0))
+        win.fill((0, 0, 0))
+        win.blit(current_map, (0, 0))
+
         player.draw(win)
         bathroom.timer(delta_time)
         player.move(delta_time)
@@ -121,23 +129,30 @@ while not done:
         game_clock = pygame.time.get_ticks() / 1000 - menuClock  # This is used for how long the game is played.
 
         if level == "main_room":
-            books.draw()
             books.read(player.position)
             books.collect(player.position, event)
             power.printing(player.position)
+            player.main_collision()
+            if player.bathroom.collidepoint(player.position[0] + 15, player.position[1] + 15):
+                level = "bathroom"
+                player.position = [0, 98]
+            if keys[pygame.K_b]:
+                level = "bathroom"
+                player.position = [0, 90]
+
 
         if level == "bathroom":
-            bathroom.draw()
+            current_map = maps[1]
+            player.img_scale = pygame.transform.scale(player.img, (50, 50))
             bathroom.number2(player.position)
-            power.draw()
             power.collide(player.position)
 
-        if keys[pygame.K_BACKSPACE]:   #This emulates the game "ending". All three peices of code need to be put in
-            screen = "main_menu"    #wherever the actual "game ending" code is.
+        if keys[pygame.K_BACKSPACE]:  # This emulates the game "ending". All three peices of code need to be put in
+            screen = "main_menu"  # wherever the actual "game ending" code is.
             save_time = True
             game_playing = False
 
-        if keys[pygame.K_o]: #This is Purely for Testing.
+        if keys[pygame.K_o]:  # This is Purely for Testing.
             screen = "goals"
             game_playing = True
 

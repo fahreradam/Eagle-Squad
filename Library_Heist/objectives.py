@@ -10,15 +10,10 @@ class Power:
         self.img = pygame.draw.rect(self.win, (255, 0, 0), (self.position[0], self.position[1], 100, 100))
         self.font = pygame.font.SysFont("Arial", 32)
         self.power_on = False
-        self.pc = pygame.draw.rect(self.win, (100, 100, 100), (400, 300, 100, 100))
-        self.printer = pygame.draw.rect(self.win, (100, 255, 100), (100, 500, 100, 100))
+        self.pc = [pygame.Rect(102, 192, 56, 24), pygame.Rect(102, 239, 56, 24), pygame.Rect(102, 286, 56, 24), pygame.Rect(102, 333, 56, 24)]
+        self.printer = pygame.Rect(34, 318, 57, 44)
         self.print = False
         self.paper = False
-
-    def draw(self):
-        pygame.draw.rect(self.win, (255, 0, 0), (self.position[0], self.position[1], 100, 100))
-        pygame.draw.rect(self.win, (100, 100, 100), (400, 300, 100, 100))
-        pygame.draw.rect(self.win, (100, 255, 100), (100, 500, 100, 100))
 
     def collide(self, player):
         if self.img.collidepoint((player[0] + 25, player[1] + 25)) and not self.power_on:
@@ -31,7 +26,7 @@ class Power:
                 self.win.blit(self.font.render("Press E to turn on power", True, (255, 255, 255)), player)
 
     def printing(self, player):
-        if self.pc.collidepoint((player[0] + 25, player[1] + 25)) and self.power_on and not self.print:
+        if self.pc[0].collidepoint(player[0] + 25, player[1] + 25) and self.power_on and not self.print:
             if pygame.key.get_pressed()[pygame.K_e] and not self.print:
                 self.win.blit(self.font.render("I wonder where it printed", True, (255, 255, 255)), player)
                 pygame.display.flip()
@@ -55,8 +50,8 @@ class Bookshelves:
     def __init__(self, x, y, surf):
         self.win = surf
         self.position = [x, y]
-        self.bookshelf = pygame.draw.rect(self.win, (255, 0, 0), (self.position[0], self.position[1], 100, 100))
-        self.table = pygame.draw.rect(self.win, (255, 0, 0), (self.position[0], self.position[1] + 200, 100, 100))
+        self.bookshelves = [pygame.Rect(609, 170, 124, 32), pygame.Rect(258, 218, 187, 32), pygame.Rect(482, 220, 254, 32), pygame.Rect(257, 266, 188, 32), pygame.Rect(483, 287, 254, 32), pygame.Rect(257, 314, 188, 32), pygame.Rect(481, 314, 254, 32)]
+        self.tables = [pygame.Rect(159, 36, 95, 54), pygame.Rect(321, 36, 95, 54), pygame.Rect(483, 36, 95, 54), pygame.Rect(645, 36, 95, 54), pygame.Rect(321, 127, 95, 54), pygame.Rect(483, 127, 95, 54)]
         self.font = pygame.font.SysFont("Arial", 32)
         self.text = self.font.render("Press E to pick up book", True, (255, 255, 255))
         self.book = 0
@@ -64,12 +59,8 @@ class Bookshelves:
         self.read_book = False
         self.collected = False
 
-    def draw(self):
-        pygame.draw.rect(self.win, (255, 0, 0), (self.position[0], self.position[1], 100, 100))
-        pygame.draw.rect(self.win, (255, 255, 0), (self.position[0], self.position[1] + 200, 100, 100))
-
     def collect(self, player, event):
-        if self.bookshelf.collidepoint((player[0] + 25, player[1] + 25)) and not self.collected:
+        if self.bookshelves[2].collidepoint((player[0] + 25, player[1] + 25)) and not self.collected:
             if pygame.key.get_pressed()[pygame.K_e]:
                 if event.type == pygame.KEYDOWN:
                     if event.key == pygame.K_e:
@@ -87,7 +78,7 @@ class Bookshelves:
 
     def read(self, player):
         if self.book >= 1 and not self.read_book:
-            if self.table.collidepoint((player[0] + 25, player[1] + 25)):
+            if self.tables[5].collidepoint(player[0] + 25, player[1] + 25):
                 if pygame.key.get_pressed()[pygame.K_e]:
                     self.win.blit(self.font.render("You have read the book", True, (255, 255, 255)), player)
                     pygame.display.flip()
@@ -103,13 +94,10 @@ class Bathroom:
         self.time = random.randint(20, 80)
         self.clock = 0
         self.position = [x, y]
-        self.toilet = pygame.draw.rect(self.win, (0, 0, 255), (self.position[0], self.position[1], 50, 50))
+        self.toilet = [pygame.Rect(57, 164, 32, 68), pygame.Rect(153,  164, 32, 68), pygame.Rect(249,  164, 32, 68), pygame.Rect(345, 164, 32, 68)]
         self.font = pygame.font.SysFont("Arial", 32)
         self.flush = True
         self.need = False
-
-    def draw(self):
-        pygame.draw.rect(self.win, (0, 0, 255), (self.position[0], self.position[1], 50, 50))
 
     def timer(self, dt):
         self.clock += dt
@@ -118,7 +106,7 @@ class Bathroom:
             self.flush = False
 
     def number2(self, player):
-        if self.toilet.collidepoint((player[0] + 25, player[1] + 25)) and not self.flush:
+        if self.toilet[0].collidepoint((player[0] + 25, player[1] + 25)) and not self.flush:
             if pygame.key.get_pressed()[pygame.K_e] and not self.flush:
                 self.win.blit(self.font.render("I feel better now", True, (255, 255, 255)), player)
                 pygame.display.flip()
