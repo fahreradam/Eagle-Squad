@@ -14,6 +14,8 @@ class Player:
             self.gamepad = pygame.joystick.Joystick(0)
             self.gamepad.init()
 
+
+
     def draw(self, surf):
         surf.blit(self.img_scale, self.position)
 

@@ -67,7 +67,7 @@ def check_music(event, gamepad):
             else:
                 music = True
 
-            print(music)
+            # print(music)
 
             if music == True:
                 pygame.mixer.music.play(-1)
@@ -82,7 +82,6 @@ while not done:
     keys = pygame.key.get_pressed()
     (mx, my) = pygame.mouse.get_pos()
     (mouseLeft, mouseMiddle, mouseRight) = pygame.mouse.get_pressed()
-
     check_music(event, player.gamepad)
 
     # Determining which "Screen" (Main Menu, Credits, Goals, Game)
@@ -174,6 +173,9 @@ while not done:
             enemy.main_collision()
             enemy.draw(win)
             enemy.movement(delta_time)
+            enemy.distanceto(player.position[0], player.position[1])
+            if enemy.distance <= 30:
+                screen = "main_menu"
             if player.bathroom.collidepoint(player.position[0] + 15, player.position[1] + 15):
                 level = "bathroom"
                 player.position = [2, 90]

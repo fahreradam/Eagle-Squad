@@ -1,5 +1,6 @@
 from player import Player
 import random
+import math
 
 class Enemy(Player):
     def __init__(self, x, y):
@@ -22,3 +23,5 @@ class Enemy(Player):
             self.timer = 200
             print(self.dir1)
 
+    def distanceto(self, playerx, playery):
+        self.distance = math.sqrt((self.position[0] - playerx) ** 2 + (self.position[1] - playery) ** 2)
