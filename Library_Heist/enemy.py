@@ -7,9 +7,9 @@ class Enemy(Player):
         super().__init__(x, y)
         self.position = [x, y]
         self.timer = 100
-        self.speed = 100
-        self.random_direction1 = [-70, 70, 0]
-        self.random_direction2 = [-70, 70, 0]
+        self.speed = 85
+        self.random_direction1 = [-85, 85, 0]
+        self.random_direction2 = [-85, 85, 0]
         self.dir1 = 0
         self.dir2 = 0
         self.orientation = 180
