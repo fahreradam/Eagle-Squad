@@ -6,7 +6,7 @@ import pickle
 import os
 from os import path
 import time
-#import tiled
+# import tiled
 
 pygame.init()
 
@@ -19,14 +19,12 @@ current_map = maps[0]
 screen = "main_menu"
 level = "main_room"
 
-
 # Class importing
 player = player.Player(21, 385)
 power = objectives.Power(0, 0, win)
 books = objectives.Bookshelves(500, 0, win)
 bathroom = objectives.Bathroom(0, 400, win)
 menu_vars = menu.Variables()
-
 
 clock = pygame.time.Clock()
 menuClock = 0
@@ -36,7 +34,7 @@ game_playing = False
 
 pygame.mixer.init()  # This is used for the Music. Credit to ID Software
 pygame.mixer.music.load("e1m1.wav")
-#pygame.mixer.music.play(-1)
+# pygame.mixer.music.play(-1)
 
 if path.exists("times.dat"):
     print("Loading Saved Data...")
@@ -135,13 +133,12 @@ while not done:
             books.collect(player.position, event)
             power.printing(player.position)
             player.main_collision()
-            if player.bathroom.collidepoint(player.position[0] + 15, player.position[1] + 15):
+            if player.bathroom.collidepoint(int(player.position[0]) + 15, int(player.position[1]) + 15):
                 level = "bathroom"
                 player.position = [0, 90]
             if keys[pygame.K_b]:
                 level = "bathroom"
                 player.position = [0, 90]
-
 
         if level == "bathroom":
             player.bath_collisions()
