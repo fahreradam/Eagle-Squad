@@ -105,9 +105,9 @@ class Player:
             self.position[1] = 384 - 20
         if pygame.Rect(0, 361, 156, 10).collidepoint(self.position[0] + 15, self.position[1] + 30):
             self.position[1] = 361 - 30
-        if pygame.Rect(140, 171, 20, 213).collidepoint(self.position[0] + 7, self.position[1] + 30):
-            self.position[0] = 159 - 7
-        if pygame.Rect(140, 171, 20, 213).collidepoint(self.position[0] + 23, self.position[1] + 30):
+        if pygame.Rect(140, 172, 20, 213).collidepoint(self.position[0] + 7, self.position[1] + 30):
+            self.position[0] = 160 - 7
+        if pygame.Rect(140, 172, 20, 213).collidepoint(self.position[0] + 23, self.position[1] + 30):
             self.position[0] = 140 - 23
         if pygame.Rect(65, 171, 92, 22).collidepoint(self.position[0] + 7, self.position[1] + 30):
             if self.position[1] + 30 <= 175:
