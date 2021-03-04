@@ -155,8 +155,9 @@ while not done:
     if screen == "game":
         win.fill((0, 0, 0))
         win.blit(current_map, (0, 0))
-        if bathroom.point + power.point + books.point == 5:
+        if bathroom.point + power.point + books.point >= 5:
             screen = "win"
+        print(bathroom.point + power.point + books.point)
         player.draw(win)
         if player.health == 3:
             win.blit(heart_scale, (0, 0))
@@ -220,7 +221,7 @@ while not done:
             game_playing = True
 
         if screen == "win":
-            ending.win()
+            ending.winning()
         if screen == "lose":
             ending.lose()
 

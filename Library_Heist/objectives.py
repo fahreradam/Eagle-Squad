@@ -87,8 +87,9 @@ class Bookshelves:
                 time.sleep(0.5)
                 self.book_selection = random.randint(0, 6)
             elif self.book == self.book_left:
-                self.point = self.point + 1
                 self.collected = True
+                self.point = self.point + 1
+
 
             else:
                 self.win.blit(self.font.render("Press E to grab book", True, (255, 255, 255)), player)
@@ -150,7 +151,7 @@ class Ending:
         self.color = (255, 255, 255)
         self.font = pygame.font.SysFont("Arial", 50)
 
-    def win(self):
+    def winning(self):
         self.win.fill((0, 0, 0))
         text = self.font.render("You Win", True, self.color)
         self.win.blit(text, (300, 300))
