@@ -6,7 +6,8 @@ import pickle
 import os
 from os import path
 import time
-#import tiled
+import enemy
+# import tiled
 
 pygame.init()
 
@@ -22,6 +23,7 @@ level = "main_room"
 
 # Class importing
 player = player.Player(21, 385)
+enemy = enemy.Enemy(400, 200)
 power = objectives.Power(0, 0, win)
 books = objectives.Bookshelves(500, 0, win)
 bathroom = objectives.Bathroom(0, 400, win)
@@ -125,6 +127,8 @@ while not done:
         player.draw(win)
         bathroom.timer(delta_time)
         player.move(delta_time)
+        enemy.draw(win)
+        enemy.movement(delta_time)
 
         game_clock = pygame.time.get_ticks() / 1000 - menuClock  # This is used for how long the game is played.
 
@@ -133,6 +137,7 @@ while not done:
             books.collect(player.position, event)
             power.printing(player.position)
             player.main_collision()
+            enemy.main_collision()
             if player.bathroom.collidepoint(player.position[0] + 15, player.position[1] + 15):
                 level = "bathroom"
                 player.position = [0, 98]
@@ -147,7 +152,7 @@ while not done:
             bathroom.number2(player.position)
             power.collide(player.position)
 
-        if keys[pygame.K_BACKSPACE]:  # This emulates the game "ending". All three peices of code need to be put in
+        if keys[pygame.K_BACKSPACE]:  # This emulates the game "ending". All three pieces of code need to be put in
             screen = "main_menu"  # wherever the actual "game ending" code is.
             save_time = True
             game_playing = False
