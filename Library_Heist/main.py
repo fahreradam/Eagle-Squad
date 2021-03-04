@@ -60,11 +60,11 @@ def menu_clock():
 
 music = True
 
-def check_music(event, gamepad):
+def check_music(event):
     global music
 
-    if event.type == pygame.KEYDOWN or event.type == pygame.JOYBUTTONDOWN:
-        if pygame.key.get_pressed()[pygame.K_m] or gamepad.get_button(6):
+    if event.type == pygame.KEYDOWN:
+        if pygame.key.get_pressed()[pygame.K_m]:
             if music == True:
                 music = False
             else:
@@ -85,7 +85,7 @@ while not done:
     keys = pygame.key.get_pressed()
     (mx, my) = pygame.mouse.get_pos()
     (mouseLeft, mouseMiddle, mouseRight) = pygame.mouse.get_pressed()
-    check_music(event, player.gamepad)
+    check_music(event)
 
     # Determining which "Screen" (Main Menu, Credits, Goals, Game)
     if pygame.mouse.get_pressed()[0]:
@@ -122,10 +122,6 @@ while not done:
     if screen == "goals":
         menu_clock()
         menu.draw_goals_screen(win, menu_vars)
-        if player.gamepad.get_button(1):
-            if game_playing == True:
-                screen = "game"
-                win.fill((0, 0, 0))
         if mouseLeft == True:
             if mx > 10 and mx < 780 and my > 530 and my < 580:
                 if game_playing == False:
@@ -179,9 +175,9 @@ while not done:
         if level == "main_room":
             player.img_scale = pygame.transform.scale(player.img, (30, 30))
             current_map = maps[0]
-            books.read(player.position, player.gamepad)
-            books.collect(player.position, event, player.gamepad)
-            power.printing(player.position, player.gamepad)
+            books.read(player.position,)
+            books.collect(player.position, event)
+            power.printing(player.position)
             player.main_collision()
             enemy.main_collision()
             enemy.draw(win)
@@ -208,8 +204,8 @@ while not done:
         if level == "bathroom":
             current_map = maps[1]
             player.img_scale = pygame.transform.scale(player.img, (50, 50))
-            bathroom.number2(player.position, player.gamepad)
-            power.collide(player.position, player.gamepad)
+            bathroom.number2(player.position)
+            power.collide(player.position)
             player.bath_collisions()
             if player.position[0] + 15 < 0:
                 level = "main_room"
@@ -219,7 +215,7 @@ while not done:
             save_time = True
             game_playing = False
 
-        if keys[pygame.K_o] or player.gamepad.get_button(7):
+        if keys[pygame.K_o]:
             screen = "goals"
             game_playing = True
 
